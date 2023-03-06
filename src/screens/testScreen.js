@@ -1,7 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Button,
+  TouchableOpacity,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-const testScreen = ({ navigation }) => {
+const TestScreen = ({ navigation }) => {
   return (
     <View>
       <Text>This is testScreen!!!</Text>
@@ -15,4 +23,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default testScreen;
+export default TestScreen;

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+// import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Button, Text, View, FlatList } from "react-native";
+// import { createStackNavigator } from "@react-navigation/stack";
+
 import { NavigationContainer } from "@react-navigation/native";
 import IndexScreen from "./src/screens/indexScreen";
-import testScreen from "./src/screens/testScreen";
+import TestScreen from "./src/screens/testScreen";
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [items, setItems] = useState([
@@ -19,10 +23,17 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Index1" component={IndexScreen}></Stack.Screen>
-        <Stack.Screen name="Test" component={testScreen}></Stack.Screen>
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Index1" component={IndexScreen}></Tab.Screen>
+        <Tab.Screen
+          name="Test"
+          component={TestScreen}
+          options={{
+            headerTitle: "Test2",
+            headerRight: () => <Button title="Test2"></Button>,
+          }}
+        ></Tab.Screen>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
@@ -38,5 +49,10 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     height: 44,
+  },
+  button1: {
+    width: 10,
+    height: 10,
+    backgroundColor: "red",
   },
 });
