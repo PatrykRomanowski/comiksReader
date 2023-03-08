@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-// import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Button, Text, View, FlatList } from "react-native";
+
+import { Provider } from "react-redux";
+import store from "./src/store";
 // import { createStackNavigator } from "@react-navigation/stack
 import { Ionicons } from "@expo/vector-icons";
 
 import { NavigationContainer } from "@react-navigation/native";
+import { HeaderTitle } from "@react-navigation/stack";
+
 import IndexScreen from "./src/screens/indexScreen";
 import TestScreen from "./src/screens/testScreen";
 import LoginScreen from "./src/screens/loginScreen";
+import LibraryScreen from "./src/screens/libraryScreen";
+// import HomeStack from "./src/navigation2/homeStack";
 
-// const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -24,53 +30,62 @@ export default function App() {
   ]);
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName; // selection of icons
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            headerStyle: {
+              height: 80,
+            },
 
-            if (route.name === "Home") {
-              iconName = "home";
-            } else if (route.name === "library") {
-              iconName = "library";
-            } else if (route.name === "book") {
-              iconName = "book";
-            } else if (route.name === "login") {
-              iconName = "person-outline";
-            }
+            tabBarIcon: ({ color, size }) => {
+              let iconName; // selection of icons
 
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: "tomato",
-          inactiveTintColor: "gray",
-          style: { height: 60 },
-          labelStyle: { fontSize: 12 },
-        }}
-      >
-        <Tab.Screen
-          name="home"
-          component={IndexScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" color={color} size={size} />
-            ),
+              if (route.name === "Home") {
+                iconName = "home";
+              } else if (route.name === "Library") {
+                iconName = "library";
+              } else if (route.name === "Book") {
+                iconName = "book";
+              } else if (route.name === "Login") {
+                iconName = "person-outline";
+              }
+
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: "tomato",
+            inactiveTintColor: "gray",
+            style: { height: 60 },
+            labelStyle: { fontSize: 12 },
           }}
-        ></Tab.Screen>
-        <Tab.Screen name="book" component={IndexScreen}></Tab.Screen>
-        <Tab.Screen name="library" component={LoginScreen}></Tab.Screen>
-        <Tab.Screen
-          name="login"
-          component={TestScreen}
-          // options={{
-          //   headerTitle: "Test2",
-          //   headerRight: () => <Button title="Test2"></Button>,
-          // }}
-        ></Tab.Screen>
-      </Tab.Navigator>
-    </NavigationContainer>
+        >
+          <Tab.Screen
+            name="Home"
+            component={IndexScreen}
+            // options={{
+            //   tabBarIcon: ({ color, size }) => (
+            //     <Ionicons name="home" color={color} size={size} />
+            //   ),
+            //   style: {
+            //     textTransform: "uppercase",
+            //   },
+            // }}
+          ></Tab.Screen>
+          <Tab.Screen name="Book" component={LoginScreen}></Tab.Screen>
+          <Tab.Screen name="Library" component={LibraryScreen}></Tab.Screen>
+          <Tab.Screen
+            name="Login"
+            component={TestScreen}
+            // options={{
+            //   headerTitle: "Test2",
+            //   headerRight: () => <Button title="Test2"></Button>,
+            // }}
+          ></Tab.Screen>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
